@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f7f8f3" />
+    <meta name="description" content="Fresh, feel-good food delivered from Foodie Express." />
+    <title>Foodie Express | Fresh food, delivered</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <a class="brand" href="#home" onclick="showPage('home')" aria-label="Foodie Express home">
+                <span class="brand-mark" aria-hidden="true">f.</span>
+                <span>foodie<span class="brand-light">express</span></span>
+            </a>
+            <nav class="main-nav" aria-label="Main navigation">
+                <button class="nav-link is-current" type="button" onclick="showPage('home')">Home</button>
+                <button class="nav-link" type="button" onclick="showPage('menu')">Menu</button>
+            </nav>
+            <button class="header-cart" type="button" onclick="showPage('cart')" aria-label="Open cart">
+                <span aria-hidden="true">Bag</span><span id="cartCount" class="cart-count">0</span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section id="page-home" class="page">
+            <div class="hero-wrap">
+                <div class="hero container">
+                    <div class="hero-copy">
+                        <span class="eyebrow"><span class="eyebrow-dot"></span> GOOD FOOD, GOOD MOOD</span>
+                        <h1>Your next<br />great meal <em>is here.</em></h1>
+                        <p>Made fresh, delivered happy. Find your new favorite from the neighborhood's tastiest menu.</p>
+                        <form class="hero-search" onsubmit="event.preventDefault(); searchFromHome();">
+                            <span class="search-icon" aria-hidden="true">⌕</span>
+                            <input id="homeSearch" type="search" placeholder="Pizza, pasta, something sweet..." aria-label="Search the menu" />
+                            <button type="submit">Find food <span aria-hidden="true">→</span></button>
+                        </form>
+                        <div class="hero-note"><span class="note-stars" aria-hidden="true">★★★★★</span><span><strong>4.9/5</strong> from happy eaters</span><span class="note-divider"></span><span>Fresh in 30–40 min</span></div>
+                    </div>
+                    <div class="hero-visual">
+                        <img src="https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=1100&q=85" alt="Freshly prepared meal served at a table" />
+                        <div class="hero-sticker"><span>Fresh</span><strong>made<br />with love</strong><span class="sticker-heart" aria-hidden="true">♥</span></div>
+                        <div class="hero-caption"><span class="caption-dot"></span> REAL FOOD. REAL GOOD.</div>
+                    </div>
+                    <span class="hero-sparkle sparkle-one" aria-hidden="true">✳</span>
+                    <span class="hero-sparkle sparkle-two" aria-hidden="true">✳</span>
+                </div>
+            </div>
+
+            <section class="content-section container">
+                <div class="section-heading">
+                    <div><span class="eyebrow section-eyebrow">WHAT ARE YOU CRAVING?</span><h2>Pick your mood</h2></div>
+                    <button class="text-link" type="button" onclick="showPage('menu')">Explore full menu <span aria-hidden="true">↗</span></button>
+                </div>
+                <div id="categoryList" class="category-list"></div>
+            </section>
+
+            <section class="featured-section">
+                <div class="container">
+                    <div class="section-heading">
+                        <div><span class="eyebrow section-eyebrow">THE CROWD PLEASERS</span><h2>Good things, <em>coming up.</em></h2></div>
+                        <button class="text-link" type="button" onclick="showPage('menu')">See everything <span aria-hidden="true">↗</span></button>
+                    </div>
+                    <div id="featuredList" class="food-grid"></div>
+                </div>
+            </section>
+        </section>
+
+        <section id="page-menu" class="page is-hidden">
+            <section class="page-intro container">
+                <span class="eyebrow section-eyebrow">MADE FRESH, JUST FOR YOU</span>
+                <h1>The <em>menu.</em></h1>
+                <p>Good ingredients. Big flavor. No wrong choices.</p>
+            </section>
+            <section class="container menu-section">
+                <div class="menu-tools">
+                    <label class="menu-search"><span aria-hidden="true">⌕</span><input id="menuSearch" type="search" placeholder="Search dishes..." oninput="renderMenu()" /></label>
+                    <label class="sort-select"><span class="visually-hidden">Sort menu</span><select id="menuSort" onchange="renderMenu()"><option value="">Recommended</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option><option value="rating">Top rated</option></select></label>
+                </div>
+                <div id="menuPills" class="menu-pills" aria-label="Filter by category"></div>
+                <p id="menuCount" class="menu-count"></p>
+                <div id="menuList" class="food-grid"></div>
+            </section>
+        </section>
+
+        <section id="page-cart" class="page is-hidden">
+            <section class="page-intro container">
+                <span class="eyebrow section-eyebrow">YOUR GOOD TASTE, IN ONE PLACE</span>
+                <h1>Your <em>bag.</em></h1>
+            </section>
+            <div class="container page-content" id="cartArea"></div>
+        </section>
+
+        <section id="page-checkout" class="page is-hidden">
+            <section class="page-intro container">
+                <span class="eyebrow section-eyebrow">ALMOST THE BEST PART</span>
+                <h1>Let's get it <em>to you.</em></h1>
+            </section>
+            <div class="container checkout-layout">
+                <section class="checkout-panel">
+                    <h2>Delivery details</h2>
+                    <label class="field-label" for="custName">Full name</label>
+                    <input id="custName" class="form-field" autocomplete="name" />
+                    <label class="field-label" for="custPhone">Phone number</label>
+                    <input id="custPhone" class="form-field" type="tel" inputmode="numeric" maxlength="10" autocomplete="tel" />
+                    <label class="field-label" for="custAddress">Delivery address</label>
+                    <textarea id="custAddress" class="form-field" rows="3" autocomplete="street-address"></textarea>
+                    <p id="checkoutError" class="checkout-error" role="alert"></p>
+                    <button class="primary-button full-button" type="button" onclick="placeOrder()">Place your order <span aria-hidden="true">→</span></button>
+                    <p class="secure-note">Cash on delivery · Your order is made fresh</p>
+                </section>
+                <aside id="orderSummary" class="summary-panel"></aside>
+            </div>
+        </section>
+
+        <section id="page-success" class="page is-hidden">
+            <div class="container success-wrap"><div id="successArea" class="success-panel"></div></div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner"><a class="brand footer-brand" href="#home" onclick="showPage('home')"><span class="brand-mark" aria-hidden="true">f.</span><span>foodie<span class="brand-light">express</span></span></a><p>Good food makes a good day.</p><small>© 2026 Foodie Express</small></div>
+    </footer>
+    <div id="toast" class="toast-notice" role="status" aria-live="polite"></div>
+    <script src="app.js"></script>
+</body>
+</html>
