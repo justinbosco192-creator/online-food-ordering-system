@@ -4,6 +4,6 @@ A responsive, browser-based food ordering demo built with plain HTML, CSS, and J
 
 ## Run
 
-Open `wwwroot/index.html` in a web browser. The cart is stored in the browser's `localStorage`.
+Open `index.html` in this repository, or `wwwroot/index.html` in the local workspace. The cart is stored in the browser's `localStorage`.
 
 Checkout is a local demo and does not submit orders to a server. Food photos and fonts load from online providers.
